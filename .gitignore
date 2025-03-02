@@ -1,0 +1,10 @@
+# pycache
+/__pycache__/*
+**.DS_Store
+**.pdf
+**.h5
+**.pyc
+**.zip
+**.exe
+
+/BioMedGraphica_raw/*
