@@ -2,28 +2,96 @@
 
 ## An All-in-One Platform for Biomedical Prior Knowledge and Omic Signaling Graph Generation
 
-![Webpage](https://img.shields.io/badge/WebUI-BioMedGraphica-red) 
-![BioMedGraphica-Connection](https://img.shields.io/badge/Knowledge_Graph-BioMedGraphica-blue)  
+![WebUI](https://img.shields.io/badge/WebUI-BioMedGraphica-red) 
+![KnowledgeGraph](https://img.shields.io/badge/Knowledge_Graph-BioMedGraphica-blue)  
 
+---
 
-Artificial intelligence (AI) is revolutionizing scientific discovery because of its super capability, following the neural scaling laws, to integrate and analyze large-scale datasets to mine knowledge. Foundation models, large language models (LLMs) and large vision models (LVMs), are among the most important foundations paving the way for general AI by pre-training on massive domain-specific datasets. Different from the well annotated, formatted and integrated large textual and image datasets for LLMs and LVMs, biomedical knowledge and datasets are fragmented with data scattered across publications and inconsistent databases that often use diverse nomenclature systems in the field of AI for Precision Health and Medicine (AI4PHM). These discrepancies, spanning different levels of biomedical organization from genes to clinical traits, present major challenges for data integration and alignment. To facilitate foundation AI model development and applications in AI4PHM, herein, we developed BioMedGraphica, an all-in-one platform and unified text-attributed knowledge graph (TAKG), consists of 3,131,788 entities and 56,817,063 relations, which are obtained from 11 distinct entity types and harmonizes 29 relations/edge types using data from 43 biomedical databases. All entities and relations are labeled a unique ID and associated with textual descriptions (textual features). Since covers most of research entities in AI4PHM, BioMedGraphica supports the zero-shot or few-shot knowledge discoveries via new relation prediction on the graph. Via a graphical user interface (GUI), researchers can access the knowledge graph with prior knowledge of target functional annotations, drugs, phenotypes and diseases (drug-protein-disease-phenotype), in the graph AI ready format. It also supports the generation of knowledge-multi-omic signaling graphs to facilitate the development and applications of novel AI models, like LLMs, graph AI, for AI4PHM science discovery, like discovering novel disease pathogenesis, signaling pathways, therapeutic targets, drugs and synergistic cocktails.
+Artificial intelligence (AI) is transforming scientific discovery by leveraging its scalable capabilities to integrate and analyze large-scale datasets for knowledge mining. Foundation models—such as large language models (LLMs) and large vision models (LVMs)—are enabling general-purpose AI, yet they rely on highly structured data that is rarely available in the biomedical domain.
 
-[[Webpage](www.google.com)] [[Paper](www.google.com)]  [[Huggingface Data](https://huggingface.co/datasets/FuhaiLiAiLab/BioMedGraphica/tree/main)]
+In contrast, biomedical data remains **fragmented**, with knowledge scattered across publications and inconsistent databases, each using diverse nomenclature systems. These discrepancies, spanning from genes to clinical traits, present significant challenges for **AI in Precision Health and Medicine (AI4PHM)**.
 
-![Figure1](./Figures/Figure1.png)
+To address this, we introduce **BioMedGraphica**, an **all-in-one platform** for:
+- Biomedical data integration across 43 databases
+- Unified **Text-Attributed Knowledge Graph (TAKG)** generation
+- Multi-omics and prior knowledge-driven graph AI applications
+
+---
+
+![Figure 1: BioMedGraphica Workflow](./Figures/Figure1.png)
+
+---
+
+## 📦 What is BioMedGraphica?
+
+- **3,131,788 Entities**  
+- **56,817,063 Relations**  
+- **11 Entity Types** and **29 Harmonized Relation Types**  
+- Fully attributed with unique IDs and **textual descriptions**
+- Enables **zero-shot / few-shot knowledge discovery** via relation prediction
+- Generates **graph AI-ready subgraphs** tailored to custom datasets
+
+---
+
+## 🧠 Use Cases
+
+- Graph-based AI model training (e.g., GNNs, LLMs with graphs)
+- Discovery of novel disease mechanisms and pathways
+- Target and drug prioritization in AI4PHM
+- Multi-omics signaling graph construction
+- Synergistic drug cocktail inference
+
+---
+
+## 🖥️ GUI & Software
+
+BioMedGraphica offers an intuitive **Windows-based GUI**, allowing users to:
+- Input multi-omics and clinical files
+- Perform entity recognition (hard/soft matching)
+- Construct user-specific knowledge-omic signaling graphs
+- Export graph-ready `.npy` files for downstream AI modeling
+
+---
+
+## 🔗 Quick Access
+
+- [🌐 Webpage (Coming Soon)](https://www.google.com)
+- [📄 Paper (bioRxiv)](https://www.google.com)
+- [📂 Hugging Face Dataset](https://huggingface.co/datasets/FuhaiLiAiLab/BioMedGraphica/tree/main)
+- [🎬 Demo Video](./Videos/Demo1.mp4) (GUI Preview)
+
+---
+
+## 🗃️ Dataset Downloads
+
+We recommend using the **[BioMedGraphica-Conn](https://huggingface.co/datasets/FuhaiLiAiLab/BioMedGraphica/tree/main/BioMedGraphica-Conn)** dataset, which excludes isolated nodes to support efficient graph training.
+
+---
+
+## 📁 Repository Structure
 
 ### 1. Data Collection
 
-Can check the data collectioin documents [here](./DataCollection.md).
+Check the structured data resource documentation [here](./DataCollection.md)
 
 ### 2. Data Processing
 
-Detailed code are in the BioMedGraphica-Raw each folder.
+Scripts and processing logic are in the `BioMedGraphica-Raw` folder
 
-### 3. Download and Deployment of BioMedGraphica
+### 3. GUI Software
 
-You can download the [BioMedGraphica-Conn dataset](https://huggingface.co/datasets/FuhaiLiAiLab/BioMedGraphica/tree/main/BioMedGraphica-Conn) (suggested since BioMedGraphica-Conn removed the isolated entities)
+The software will be released soon — a demo is available [here](./Videos/Demo1.mp4)
 
-### 3. BioMedGraphica Software
+---
 
-We recorded a simple [demo video](./Videos/Demo1.mp4) for our software. And the software will be released soon.
+## 📚 Citation
+
+If you use BioMedGraphica, please cite:
+
+```bibtex
+@article{zhang2024biomedgraphica,
+  title={BioMedGraphica: An All-in-One Platform for Biomedical Prior Knowledge and Omic Signaling Graph Generation},
+  author={Zhang, Heming and Liang, Shunning and Xu, Tim and Li, Wenyu and Huang, Di and Dong, Yuhan and Li, Guangfu and Miller, J Philip and Goedegebuure, S Peter and Sardiello, Marco and others},
+  journal={bioRxiv},
+  year={2024}
+}
