@@ -2,7 +2,7 @@
 
 ## An All-in-One Platform for Biomedical Prior Knowledge and Omic Signaling Graph Generation
 
-![Paper](https://img.shields.io/badge/Webpage-BioMedGraphica-red) 
+![Webpage](https://img.shields.io/badge/WebUI-BioMedGraphica-red) 
 ![BioMedGraphica-Connection](https://img.shields.io/badge/Knowledge_Graph-BioMedGraphica-blue)  
 
 
