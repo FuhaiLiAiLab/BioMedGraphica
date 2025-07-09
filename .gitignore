@@ -7,4 +7,15 @@
 **.zip
 **.exe
 
+# Upload files
+upload.ipynb
+# Embedding files
+text_emb.ipynb
+
+# soft_match
+/soft_match/*
+
 # /BioMedGraphica_raw/
+
+# /BioMedGraphica-Conn/
+/BioMedGraphica-Conn/*

@@ -1,8 +1,6 @@
 # BioMedGraphica
 
-
-# Data Source
-## How to Access and Reconstruct BioMedGraphica
+## 1. How to Access and Reconstruct BioMedGraphica
 **Data Access**: The datasets used in this project are available through APIs and links provided in the table. Ensure you have proper permissions and follow the terms of use for each source.
 
 **Pre-Processing**: Use the provided Jupyter notebooks `.ipynb` to pre-process the data. Each notebook is designed to handle data retrieval, cleaning, and merging.
@@ -22,7 +20,7 @@ filter_data('gene_refseq_uniprotkb_collab', 'refseq_uniprot_human.csv')
 ```
 **Output**: Processed data files `.csv` will be generated, which can be integrated into the BioMedGraphica framework.
 
-## API and Tool Integration
+## 2. API and Tool Integration
 For entities that require API access,  the corresponding code is provided below and is also included in the respective `.ipynb` files to simplify data retrieval and integration.
 * Ensembl API
 ```python
@@ -301,572 +299,14 @@ fetch_and_write_annotations(base_url, total_pages, file_path)
 
 print(f"Data saved to {file_path}")
 ```
-## Detailed Steps of Data Download and Pre-processing of Entity
+## 3. Detailed Steps of Data Download and Pre-processing of Entity
 This section outlines the detailed steps for downloading and pre-processing data for each database used in Entity part. The procedures are designed to ensure data consistency and compatibility for downstream integration.
-### General Workflow
-1. **Data Source Identification**: Identify the official database or API for the required data.
-2. **Data Download**: Use appropriate tools or scripts to download the data.
-3. **Pre-processing**: Use custom scripts tailored to each database to clean, normalize, and restructure the data for integration.
-
-### Database-Specific Steps
-### 1. Ensembl
-
-Ensembl data is used across three entities: `gene`, `transcript`, and `protein`. Data is downloaded using the API described in the `API and Tool Integration` section, and specific attributes are retained for each entity during pre-processing. Custom processing scripts are utilized to ensure data consistency and relevance.
-
-#### **Data Download**
-- Use the [BioMart](https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-10-22) API to fetch data for `gene`, `transcript`, and `protein` entities.
-- The API allows querying specific datasets and attributes.
-
-#### **Pre-processing**
-- Custom Ensembl section in each scripts (`biomedgraphica_gene.ipynb`, `biomedgraphica_transcript.ipynb`, `biomedgraphica_protein.ipynb`) are used to clean and format the data for integration.
-- For `gene` entity, retain the following attributes:  
-```python
-attributes=['ensembl_gene_id', 'ensembl_gene_id_version','start_position', 'end_position','gene_biotype', 'hgnc_id', 'hgnc_symbol']
-```
-- For `transcript` entity, retain the following attributes:
-```python
-attributes=['ensembl_transcript_id' ,'ensembl_transcript_id_version', 'ensembl_gene_id', 'external_gene_name', 'external_transcript_name', 'transcript_biotype', 'refseq_mrna', 'refseq_ncrna', 'transcript_mane_select']
-```
-- For `protein` entity, retain the following attributes:
-```python
-attributes=['ensembl_peptide_id', 'ensembl_peptide_id_version','uniprotswissprot', 'refseq_peptide', 'entrezgene_id', 'external_gene_name']
-```
----
-### 2. OMIM - Need Registration
-The OMIM database provides two key data sources used in this project: `mim2gene.txt` and `genemap2.txt`. These datasets are essential for gene-level integration and are pre-processed using the `biomedgraphica_gene.ipynb`.
-#### **Data Download**
-1. **mim2gene.txt**:
-   - This file can be directly downloaded without registration.
-   - It contains mappings between OMIM IDs and gene IDs.
-
-2. **genemap2.txt**:
-   - This file requires registration on the [OMIM downloads page](https://omim.org/downloads).
-   - Note: This dataset is subject to non-commercial use restrictions. Please review the OMIM terms of use carefully before downloading and processing.
-#### **Pre-processing**
-- The pre-processing for both files is implemented in the `biomedgraphica_gene.ipynb` notebook.
----
-### 3. HGNC
-
-The HGNC database provides essential gene-level information that is used in this project. Data is retrieved using HGNC's Biomart tool, which allows precise filtering and extraction of relevant fields. The processed data is then used for gene-level integration.
-#### **Data Download**
-- Access the data via the `Download link` in the `Entity` section below.
-- **Fields Selected**:
-  - `HGNC ID`
-  - `Approved symbol`
-  - `Approved name`
-  - `NCBI Gene ID`
-  - `Ensembl gene ID`
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_gene.ipynb` notebook.
----
-### 4. NCBI Gene
-The NCBI Gene database provides critical gene-level information, particularly for human data and mapping relationships between NCBI Gene IDs and Ensembl IDs. Two files, `gene_info` and `gene2ensembl`, are utilized for this purpose.
-
-#### **Data Download**
-- The files can be accessed via the `Download link` in the `Entity` section of this document.
-1. **gene_info**:
-   - Contains comprehensive information on genes, including descriptions, synonyms, and taxonomy.
-   - Only human data is extracted for this project.
-
-2. **gene2ensembl**:
-   - Provides a mapping between NCBI Gene IDs and Ensembl IDs.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_gene.ipynb` notebook.
----
-### 5. RefSeq
-
-The RefSeq database is utilized for `gene`, `transcript`, and `protein` entities in this project. Different files are used for each entity, and pre-processing is performed in the corresponding Jupyter Notebooks.
-#### **Data Download**
-- The following files are used for each entity and can be accessed via the `Download link` in the `Entity` section of this document:
-1. **Gene**:
-   - File: `gene_refseq_uniprotkb_collab`
-   - Due to the large size of the file, only human data is extracted using the **RefSeq Data Pre-Process code** in `biomedgraphica_gene.ipynb`.
-
-2. **Transcript**:
-   - File: `MANE.GRCh38.v1.3.summary.txt`
-
-3. **Protein**:
-   - Files: `refseq_uniprot_human.csv` and `gene2ensembl`
-   - Human-specific data from `refseq_uniprot_human.csv` is extracted using the **RefSeq Data Pre-Process code** in `biomedgraphica_protein.ipynb`.
-
-#### **Pre-processing**
-- Pre-processing is performed using the following notebooks:
-  - **Gene-level data**: `biomedgraphica_gene.ipynb`
-    - Extracts human-specific data from `gene_refseq_uniprotkb_collab` and formats it for integration.
-  - **Transcript-level data**: `biomedgraphica_gene.ipynb`
-    - Directly processes `MANE.GRCh38.v1.3.summary.txt`.
-  - **Protein-level data**: `biomedgraphica_protein.ipynb`
-    - Extracts human-specific data from `refseq_uniprot_human.csv` and processes `gene2ensembl`.
----
-### 6. RNACentral
-
-The RNACentral database provides comprehensive transcript data for this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration or filtering is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_transcript.ipynb` notebook.
----
-### 7. UniProt
-
-The UniProt database is used to retrieve protein-level data for this project. Data is downloaded programmatically using the UniProt API.
-
-#### **Data Download**
-- Data is accessed via the UniProt API.
-- The specific API query used:
-```python
-params = {
-        'fields': 'accession,protein_name,gene_primary,xref_ensembl_full,xref_geneid',
-        'format': 'tsv',
-        'query': '(model_organism:9606) AND (reviewed:true)',
-        'sort': 'organism_name asc'
-    }
-```
-- Example API usage and detailed download code can be found in the `API and Tool Integration` section or in the `biomedgraphica_protein.ipynb` notebook.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_protein.ipynb` notebook.
----
-### 8. Reactome
-
-The Reactome database provides pathway-level data for this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_pathway.ipynb` notebook.
----
-### 9. KEGG
-The KEGG database provides pathway and gene-level data for this project. Data is obtained using both R and Python, depending on the specific use case.
-
-#### **Data Download**
-- KEGG data is retrieved programmatically using Python and R. Example API usage and detailed download code can be found in the `API and Tool Integration` section or in the `biomedgraphica_pathway.ipynb` notebook.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_pathway.ipynb` notebook.
----
-### 10. WikiPathways
-
-The WikiPathways database provides pathway-level data for this project. Data is retrieved programmatically using the WikiPathways API.
-
-#### **Data Download**
-- Data is accessed via the WikiPathways API.
-- Example API usage and detailed download code can be found in the `API and Tool Integration` section or in the `biomedgraphica_pathway.ipynb` notebook.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_pathway.ipynb` notebook.
----
-### 11. Pathway Ontology
-The Pathway Ontology database provides hierarchical pathway data for this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_pathway.ipynb` notebook.
----
-### 12. ComPath
-The ComPath database provides ID mapping between KEGG, WikiPathways, and Pathway Ontology, facilitating pathway data integration.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_pathway.ipynb` notebook.
----
-### 13. HMDB
-
-The HMDB database provides comprehensive metabolite information for this project.
-
-#### **Data Download**
-- Click the `Download link` in the `Entity` section of this document to download the "All Metabolites" XML file.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_metabolome.ipynb` notebook.
----
-### 14. ChEBI
-
-The ChEBI database is used for both `metabolite` and `drug` entities in this project. It provides curated information about small molecular entities.
-
-#### **Data Download**
-1. **Metabolite**:
-   - The provided download link directs to a page with human metabolites.
-   - Click the "Download as Tab-delimited" option on the page to download the file.
-
-2. **Drug**:
-   - Click the `Download link` in the `Entity` section of this document to download the data.
-   - No registration is required.
-
-#### **Pre-processing**
-- Pre-processing is performed using the following notebooks:
-  - **Metabolite data**: `biomedgraphica_metabolome.ipynb`
-  - **Drug data**: `biomedgraphica_drug.ipynb`
----
-### 15. NCBI Taxonomy
-
-The NCBI Taxonomy database provides hierarchical and taxonomic data for the `microbiota` entity in this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_microbiome.ipynb` notebook.
----
-### 16. SILVA
-
-The SILVA database provides curated and comprehensive microbiota data for this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_microbiome.ipynb` notebook.
-
----
-### 17. Greengenes
-The Greengenes database offers taxonomic data for the microbiota entity in this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_microbiome.ipynb` notebook.
-
----
-### 18. RDP
-
-The RDP (Ribosomal Database Project) database provides curated microbiota-related data for this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_microbiome.ipynb` notebook.
-
----
-
-### 19. GTDB
-
-The GTDB (Genome Taxonomy Database) offers genomic and taxonomic data for the microbiota entity in this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_microbiome.ipynb` notebook.
----
-### 20. HPO (Human Phenotype Ontology)
-
-The HPO database provides standardized phenotype terminology for the `phenotype` entity in this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document. Download the `HP.OBO` file.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_phenotype.ipynb` notebook.
-- The notebook cleans up phenotype labels by:
-  1. Identifying and systematically removing predefined descriptive expressions.
-  2. Combining all duplicate entries to ensure data consistency.
----
-
-### 21. UMLS - Need Registration
-
-The UMLS database provides comprehensive mappings of medical terms, including phenotype-related data, for this project.
-
-#### **Data Download**
-- Registration is required to access the UMLS data. Please follow the instructions provided on the UMLS website to complete the registration process and download the necessary files.
-
-#### **Pre-processing**
-- Pre-processing is performed using the following notebooks:
-  - **Phenotype data**: `biomedgraphica_phenotype.ipynb`
-  - **Disease data**: `biomedgraphica_disease.ipynb`
----
-
-### 22. ICD-10
-
-The ICD-10 database provides standardized disease classifications for the `disease` entity in this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_disease.ipynb` notebook.
-
----
-
-### 23. ICD-11
-
-The ICD-11 database offers updated disease classifications for the `disease` entity in this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_disease.ipynb` notebook.
----
-
-### 24. Disease Ontology
-
-The Disease Ontology database provides hierarchical disease terms and mappings for the `disease` entity in this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_disease.ipynb` notebook.
----
-
-### 25. MeSH
-
-The MeSH database provides hierarchical medical terms and classifications used in this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_disease.ipynb` notebook.
----
-### 26. SNOMED-CT - Need Registration
-
-The SNOMED-CT database provides detailed clinical terminology used in this project.
-
-#### **Data Download**
-- Registration is required to access the SNOMED-CT data. Please follow the instructions provided on the SNOMED-CT or UMLS registration system to complete the registration process and download the necessary files.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_disease.ipynb` notebook.
-
----
-### 27. MONDO
-
-The MONDO database provides integrated disease ontology terms for the `disease` entity in this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_disease.ipynb` notebook.
-
----
-### 28. PubChem
-
-The PubChem database provides comprehensive chemical information used in this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_drug.ipynb` notebook.
----
-
-### 29. CAS
-
-The CAS database provides unique identifiers and annotations for chemical substances used in this project.
-
-#### **Data Download**
-- Data is fetched programmatically using a Python script that utilizes the PubChem API.
-- Example Python script for fetching CAS data:
-  ```python
-  import requests
-  import json
-
-  def fetch_and_write_annotations(base_url, total_pages, file_path):
-      with open(file_path, 'w') as file:
-          file.write('[')
-          first_entry = True 
-          
-          for page in range(1, total_pages + 1):
-              url = f"{base_url}?page={page}"
-              print(f"Fetching data from: {url}") 
-              response = requests.get(url)
-              if response.status_code == 200:
-                  data = response.json()
-                  annotations = data.get('Annotations', {}).get('Annotation', [])
-                  
-                  for annotation in annotations:
-                      if not first_entry:
-                          file.write(',')
-                      json.dump(annotation, file)
-                      first_entry = False
-              else:
-                  print(f"Failed to retrieve data for page {page}: {response.status_code}")
-                  continue
-          
-          file.write(']')
-
-  base_url = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/annotations/heading/CAS/JSON"
-  total_pages = 2789  # Update the total number if needed
-  file_path = "CAS_data.json"
-
-  fetch_and_write_annotations(base_url, total_pages, file_path)
-  ```
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_drug.ipynb` notebook.
----
-### 30. NDC (National Drug Code)
-
-The NDC database provides standardized drug identification codes for the `drug` entity in this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_drug.ipynb` notebook.
----
-
-### 31. UNII (Unique Ingredient Identifier)
-
-The UNII database provides unique identifiers for drug ingredients, split into two parts.
-
-#### **Data Download**
-1. **Part 1**:
-   - Can be directly downloaded via the `Download link` in the `Entity` section of this document.
-
-2. **Part 2**:
-   - Data is fetched programmatically using a Python script via the PubChem API.
-   - Example Python script:
-     ```python
-     import requests
-     import json
-
-     def fetch_and_write_annotations(base_url, total_pages, file_path):
-         with open(file_path, 'w') as file:
-             file.write('[')
-             first_entry = True 
-             
-             for page in range(1, total_pages + 1):
-                 url = f"{base_url}?page={page}"
-                 print(f"Fetching data from: {url}") 
-                 response = requests.get(url)
-                 if response.status_code == 200:
-                     data = response.json()
-                     annotations = data.get('Annotations', {}).get('Annotation', [])
-                     
-                     for annotation in annotations:
-                         if not first_entry:
-                             file.write(',')
-                         json.dump(annotation, file)
-                         first_entry = False
-                 else:
-                     print(f"Failed to retrieve data for page {page}: {response.status_code}")
-                     continue
-             
-             file.write(']')
-
-     base_url = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/annotations/heading/UNII/JSON"
-     total_pages = 153  # Update the total number if needed
-     file_path = "unii_data.json"
-
-     fetch_and_write_annotations(base_url, total_pages, file_path)
-     ```
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_drug.ipynb` notebook.
-
----
-
-### 32. DrugBank
-
-The DrugBank database provides detailed drug information for the `drug` entity in this project.
-
-#### **Data Download**
-- Registration for an academic account is required to access the DrugBank data.
-- Once registered, data can be downloaded from the DrugBank website.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_drug.ipynb` notebook.
----
-### 33. CTD
-
-The CTD database provides curated data on chemical exposures, diseases, and gene interactions for the `exposure` entity in this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_exposure.ipynb` notebook.
----
-
-### 34. ToxCast
-
-The ToxCast database provides high-throughput screening data for chemical toxicity used in this project for the `exposure` entity.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_exposure.ipynb` notebook.
----
-### 35. ChemIDplus
-
-The ChemIDplus database provides curated chemical information and is used in this project for the `exposure` and `drug` entities.
-
-#### **Data Download**
-- Data is fetched programmatically using a Python script via the PubChem API.
-- The following script retrieves the data and saves it as `CAS_data.json`:
-  ```python
-  import pandas as pd
-  import json
-  import requests
-
-  def fetch_and_write_annotations(base_url, total_pages, file_path):
-      with open(file_path, 'w') as file:
-          file.write('[')
-          first_entry = True 
-          
-          for page in range(1, total_pages + 1):
-              url = f"{base_url}?page={page}"
-              print(f"Fetching data from: {url}") 
-              response = requests.get(url)
-              if response.status_code == 200:
-                  data = response.json()
-                  annotations = data.get('Annotations', {}).get('Annotation', [])
-                  
-                  for annotation in annotations:
-                      if not first_entry:
-                          file.write(',')
-                      json.dump(annotation, file)
-                      first_entry = False
-              else:
-                  print(f"Failed to retrieve data for page {page}: {response.status_code}")
-                  continue
-          
-          file.write(']')
-
-  base_url = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/annotations/heading/CAS/JSON"
-  total_pages = 2789  # Update to reflect the total number of pages
-  file_path = "CAS_data.json"
-
-  fetch_and_write_annotations(base_url, total_pages, file_path)
-
-  print(f"Data saved to {file_path}")
-  ```
-#### **Pre-processing**
-- Pre-processing is performed using the `biomedgraphica_exposure.ipynb` notebook.
----
-## Entity
+### 3.1 General Workflow
+- **Data Source Identification**: Identify the official database or API for the required data.
+- **Data Download**: Use appropriate tools or scripts to download the data.
+- **Pre-processing**: Use custom scripts tailored to each database to clean, normalize, and restructure the data for integration.
+
+### 3.2 Entity
 Below are the key data sources used, along with their processing scripts and output files:
 | Database | Download Link | Processing script | Output file |
 | :-------: | :-------: | :-------: | :-------: |
@@ -912,351 +352,572 @@ Below are the key data sources used, along with their processing scripts and out
 | ToxCast | [Link](https://clowder.edap-cluster.com/files/6114f600e4b0856fdc65865c) | biomedgraphica_exposure.ipynb | biomedgraphica_exposure.csv |
 | ChemIDplus | [Link](https://go.drugbank.com/releases/5-1-12/downloads/all-drug-links) | biomedgraphica_exposure.ipynb | biomedgraphica_exposure.csv |
 
-## Detailed Steps of Data Download and Pre-processing of Relation
-This section outlines the databases used for relation extraction and mapping, detailing the download and pre-processing steps for integrating them into the knowledge graph.
-### 1. Ensembl
 
-The Ensembl database provides data for gene-transcript and transcript-protein relations, retrieved using the [BioMart](https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-10-22).
+### 3.3 Database-Specific Steps
+#### 3.3.1 Ensembl
 
-#### **Data Download**
-- Data is accessed via the [BioMart](https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-10-22), specifying the attributes relevant to each relation type:
-  1. **Gene-Transcript Relation**:
-     - Attributes: `['ensembl_gene_id', 'ensembl_transcript_id']`
+Ensembl data is used across three entities: `gene`, `transcript`, and `protein`. Data is downloaded using the API described in the `API and Tool Integration` section, and specific attributes are retained for each entity during pre-processing. Custom processing scripts are utilized to ensure data consistency and relevance.
 
-  2. **Transcript-Protein Relation**:
-     - Attributes: `['ensembl_transcript_id', 'ensembl_protein_id']`
+##### **Data Download**
+- Use the [BioMart](https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-10-22) API to fetch data for `gene`, `transcript`, and `protein` entities.
+- The API allows querying specific datasets and attributes.
 
-#### **Pre-processing**
-1. **Gene-Transcript Relation**:
-   - Pre-processing is performed using the `gene-transcript.ipynb` notebook.
-2. **Transcript-Protein Relation**:
-   - Pre-processing is performed using the `transcript-protein.ipynb` notebook.
+##### **Pre-processing**
+- Custom Ensembl section in each scripts (`biomedgraphica_gene.ipynb`, `biomedgraphica_transcript.ipynb`, `biomedgraphica_protein.ipynb`) are used to clean and format the data for integration.
+- For `gene` entity, retain the following attributes:  
+```python
+attributes=['ensembl_gene_id', 'ensembl_gene_id_version','start_position', 'end_position','gene_biotype', 'hgnc_id', 'hgnc_symbol']
+```
+- For `transcript` entity, retain the following attributes:
+```python
+attributes=['ensembl_transcript_id' ,'ensembl_transcript_id_version', 'ensembl_gene_id', 'external_gene_name', 'external_transcript_name', 'transcript_biotype', 'refseq_mrna', 'refseq_ncrna', 'transcript_mane_select']
+```
+- For `protein` entity, retain the following attributes:
+```python
+attributes=['ensembl_peptide_id', 'ensembl_peptide_id_version','uniprotswissprot', 'refseq_peptide', 'entrezgene_id', 'external_gene_name']
+```
 ---
-### 2. RefSeq
+#### 3.3.2 OMIM - Need Registration
+The OMIM database provides two key data sources used in this project: `mim2gene.txt` and `genemap2.txt`. These datasets are essential for gene-level integration and are pre-processed using the `biomedgraphica_gene.ipynb`.
+##### **Data Download**
+- **mim2gene.txt**:
+   - This file can be directly downloaded without registration.
+   - It contains mappings between OMIM IDs and gene IDs.
 
-The RefSeq database provides data for `gene-transcript` and `transcript-protein` relations in this project.
+- **genemap2.txt**:
+   - This file requires registration on the [OMIM downloads page](https://omim.org/downloads).
+   - Note: This dataset is subject to non-commercial use restrictions. Please review the OMIM terms of use carefully before downloading and processing.
+##### **Pre-processing**
+- The pre-processing for both files is implemented in the `biomedgraphica_gene.ipynb` notebook.
+---
+#### 3.3.3 HGNC
 
-#### **Data Download**
+The HGNC database provides essential gene-level information that is used in this project. Data is retrieved using HGNC's Biomart tool, which allows precise filtering and extraction of relevant fields. The processed data is then used for gene-level integration.
+##### **Data Download**
+- Access the data via the `Download link` in the `Entity` section below.
+- **Fields Selected**:
+  - `HGNC ID`
+  - `Approved symbol`
+  - `Approved name`
+  - `NCBI Gene ID`
+  - `Ensembl gene ID`
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_gene.ipynb` notebook.
+---
+#### 3.3.4 NCBI Gene
+The NCBI Gene database provides critical gene-level information, particularly for human data and mapping relationships between NCBI Gene IDs and Ensembl IDs. Two files, `gene_info` and `gene2ensembl`, are utilized for this purpose.
+
+##### **Data Download**
+- The files can be accessed via the `Download link` in the `Entity` section of this document.
+- **gene_info**:
+   - Contains comprehensive information on genes, including descriptions, synonyms, and taxonomy.
+   - Only human data is extracted for this project.
+
+- **gene2ensembl**:
+   - Provides a mapping between NCBI Gene IDs and Ensembl IDs.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_gene.ipynb` notebook.
+---
+#### 3.3.5 RefSeq
+
+The RefSeq database is utilized for `gene`, `transcript`, and `protein` entities in this project. Different files are used for each entity, and pre-processing is performed in the corresponding Jupyter Notebooks.
+##### **Data Download**
+- The following files are used for each entity and can be accessed via the `Download link` in the `Entity` section of this document:
+- **Gene**:
+   - File: `gene_refseq_uniprotkb_collab`
+   - Due to the large size of the file, only human data is extracted using the **RefSeq Data Pre-Process code** in `biomedgraphica_gene.ipynb`.
+
+- **Transcript**:
+   - File: `MANE.GRCh38.v1.3.summary.txt`
+
+- **Protein**:
+   - Files: `refseq_uniprot_human.csv` and `gene2ensembl`
+   - Human-specific data from `refseq_uniprot_human.csv` is extracted using the **RefSeq Data Pre-Process code** in `biomedgraphica_protein.ipynb`.
+
+##### **Pre-processing**
+- Pre-processing is performed using the following notebooks:
+  - **Gene-level data**: `biomedgraphica_gene.ipynb`
+    - Extracts human-specific data from `gene_refseq_uniprotkb_collab` and formats it for integration.
+  - **Transcript-level data**: `biomedgraphica_gene.ipynb`
+    - Directly processes `MANE.GRCh38.v1.3.summary.txt`.
+  - **Protein-level data**: `biomedgraphica_protein.ipynb`
+    - Extracts human-specific data from `refseq_uniprot_human.csv` and processes `gene2ensembl`.
+---
+#### 3.3.6 RNACentral
+
+The RNACentral database provides comprehensive transcript data for this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration or filtering is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_transcript.ipynb` notebook.
+---
+#### 3.3.7 UniProt
+
+The UniProt database is used to retrieve protein-level data for this project. Data is downloaded programmatically using the UniProt API.
+
+##### **Data Download**
+- Data is accessed via the UniProt API.
+- The specific API query used:
+```python
+params = {
+        'fields': 'accession,protein_name,gene_primary,xref_ensembl_full,xref_geneid',
+        'format': 'tsv',
+        'query': '(model_organism:9606) AND (reviewed:true)',
+        'sort': 'organism_name asc'
+    }
+```
+- Example API usage and detailed download code can be found in the `API and Tool Integration` section or in the `biomedgraphica_protein.ipynb` notebook.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_protein.ipynb` notebook.
+---
+#### 3.3.8 Reactome
+
+The Reactome database provides pathway-level data for this project.
+
+##### **Data Download**
 - The data can be accessed via the `Download link` in the `Entity` section of this document.
 - No registration is required for downloading.
 
-#### **Pre-processing**
-1. **Gene-Transcript Relation**:
-   - Pre-processing is performed using the `gene-transcript.ipynb` notebook.
-
-2. **Transcript-Protein Relation**:
-   - Pre-processing is performed using the `transcript-protein.ipynb` notebook.
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_pathway.ipynb` notebook.
 ---
-### 3. UniProt
+#### 3.3.9 KEGG
+The KEGG database provides pathway and gene-level data for this project. Data is obtained using both R and Python, depending on the specific use case.
 
-The UniProt database provides data for `transcript-protein` and `protein-disease` relations in this project.
+##### **Data Download**
+- KEGG data is retrieved programmatically using Python and R. Example API usage and detailed download code can be found in the `API and Tool Integration` section or in the `biomedgraphica_pathway.ipynb` notebook.
 
-#### **Data Download**
-- Data is retrieved programmatically using the UniProt API with the following parameters:
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_pathway.ipynb` notebook.
+---
+#### 3.3.10 WikiPathways
+
+The WikiPathways database provides pathway-level data for this project. Data is retrieved programmatically using the WikiPathways API.
+
+##### **Data Download**
+- Data is accessed via the WikiPathways API.
+- Example API usage and detailed download code can be found in the `API and Tool Integration` section or in the `biomedgraphica_pathway.ipynb` notebook.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_pathway.ipynb` notebook.
+---
+#### 3.3.11 Pathway Ontology
+The Pathway Ontology database provides hierarchical pathway data for this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_pathway.ipynb` notebook.
+---
+#### 3.3.12 ComPath
+The ComPath database provides ID mapping between KEGG, WikiPathways, and Pathway Ontology, facilitating pathway data integration.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_pathway.ipynb` notebook.
+---
+#### 3.3.13 HMDB
+
+The HMDB database provides comprehensive metabolite information for this project.
+
+##### **Data Download**
+- Click the `Download link` in the `Entity` section of this document to download the "All Metabolites" XML file.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_metabolome.ipynb` notebook.
+---
+#### 3.3.14 ChEBI
+
+The ChEBI database is used for both `metabolite` and `drug` entities in this project. It provides curated information about small molecular entities.
+
+##### **Data Download**
+- **Metabolite**:
+   - The provided download link directs to a page with human metabolites.
+   - Click the "Download as Tab-delimited" option on the page to download the file.
+
+- **Drug**:
+   - Click the `Download link` in the `Entity` section of this document to download the data.
+   - No registration is required.
+
+##### **Pre-processing**
+- Pre-processing is performed using the following notebooks:
+  - **Metabolite data**: `biomedgraphica_metabolome.ipynb`
+  - **Drug data**: `biomedgraphica_drug.ipynb`
+---
+#### 3.3.15 NCBI Taxonomy
+
+The NCBI Taxonomy database provides hierarchical and taxonomic data for the `microbiota` entity in this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_microbiome.ipynb` notebook.
+---
+#### 3.3.16 SILVA
+
+The SILVA database provides curated and comprehensive microbiota data for this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_microbiome.ipynb` notebook.
+
+---
+#### 3.3.17 Greengenes
+The Greengenes database offers taxonomic data for the microbiota entity in this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_microbiome.ipynb` notebook.
+
+---
+#### 3.3.18 RDP
+
+The RDP (Ribosomal Database Project) database provides curated microbiota-related data for this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_microbiome.ipynb` notebook.
+
+---
+
+#### 3.3.19 GTDB
+
+The GTDB (Genome Taxonomy Database) offers genomic and taxonomic data for the microbiota entity in this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_microbiome.ipynb` notebook.
+---
+#### 3.3.20 HPO (Human Phenotype Ontology)
+
+The HPO database provides standardized phenotype terminology for the `phenotype` entity in this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document. Download the `HP.OBO` file.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_phenotype.ipynb` notebook.
+- The notebook cleans up phenotype labels by:
+  - Identifying and systematically removing predefined descriptive expressions.
+  - Combining all duplicate entries to ensure data consistency.
+---
+
+#### 3.3.21 UMLS - Need Registration
+
+The UMLS database provides comprehensive mappings of medical terms, including phenotype-related data, for this project.
+
+##### **Data Download**
+- Registration is required to access the UMLS data. Please follow the instructions provided on the UMLS website to complete the registration process and download the necessary files.
+
+##### **Pre-processing**
+- Pre-processing is performed using the following notebooks:
+  - **Phenotype data**: `biomedgraphica_phenotype.ipynb`
+  - **Disease data**: `biomedgraphica_disease.ipynb`
+---
+
+#### 3.3.22 ICD-10
+
+The ICD-10 database provides standardized disease classifications for the `disease` entity in this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_disease.ipynb` notebook.
+
+---
+
+#### 3.3.23 ICD-11
+
+The ICD-11 database offers updated disease classifications for the `disease` entity in this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_disease.ipynb` notebook.
+---
+
+#### 3.3.24 Disease Ontology
+
+The Disease Ontology database provides hierarchical disease terms and mappings for the `disease` entity in this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_disease.ipynb` notebook.
+---
+
+#### 3.3.25 MeSH
+
+The MeSH database provides hierarchical medical terms and classifications used in this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_disease.ipynb` notebook.
+---
+
+#### 3.3.26 SNOMED-CT - Need Registration
+
+The SNOMED-CT database provides detailed clinical terminology used in this project.
+
+##### **Data Download**
+- Registration is required to access the SNOMED-CT data. Please follow the instructions provided on the SNOMED-CT or UMLS registration system to complete the registration process and download the necessary files.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_disease.ipynb` notebook.
+
+---
+#### 3.3.27 MONDO
+
+The MONDO database provides integrated disease ontology terms for the `disease` entity in this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_disease.ipynb` notebook.
+
+---
+#### 3.3.28 PubChem
+
+The PubChem database provides comprehensive chemical information used in this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_drug.ipynb` notebook.
+---
+
+#### 3.3.29 CAS
+
+The CAS database provides unique identifiers and annotations for chemical substances used in this project.
+
+##### **Data Download**
+- Data is fetched programmatically using a Python script that utilizes the PubChem API.
+- Example Python script for fetching CAS data:
   ```python
-  params = {
-      'fields': 'accession,xref_ensembl',  # choose the parameters you need
-      'format': 'tsv',
-      'query': '(model_organism:9606) AND (reviewed:true)',  # human reviewed entries
-      'sort': 'organism_name asc'
-  }
-  ```
-#### **Pre-processing**
-1. **Transcript-Protein Relation:**:
-   - Pre-processing is performed using the `transcript-protein.ipynb` notebook.
-
-2. **Protein-Disease Relation**:
-   - Pre-processing is performed using the `protein-disease.ipynb` notebook.
----
-### 4. BioGRID
-
-The BioGRID database provides curated protein-protein interaction data for this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `protein-protein.ipynb` notebook.
----
-
-### 5. STRING
-
-The STRING database provides protein-protein interaction data, including interaction confidence scores.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `protein-protein.ipynb` notebook.
----
-### 6. KEGG
-
-The KEGG database provides data for multiple relations in this project, including `protein-protein`, `protein-pathway`, `pathway-protein`, `pathway-drug`, and `drug-pathway`.
-
-#### **Data Download**
-- KEGG data is retrieved using R scripts. The specific code can be found in the `Entity` section of this document.
-
-#### **Pre-processing**
-1. **Protein-Protein Relation**:
-   - Pre-processing is performed using the `protein-protein.ipynb` notebook.
-
-2. **Protein-Pathway Relation**:
-   - Pre-processing is performed using the `protein-pathway.ipynb` notebook.
-
-3. **Pathway-Protein Relation**:
-   - Pre-processing is performed using the `pathway-protein.ipynb` notebook.
-
-4. **Pathway-Drug Relation**:
-   - Pre-processing is performed using the `pathway-drug.ipynb` notebook.
-
-5. **Drug-Pathway Relation**:
-   - Pre-processing is performed using the `drug-pathway.ipynb` notebook.
----
-### 7. HPO (Human Phenotype Ontology)
-
-The HPO database provides standardized phenotype information and is used for multiple relations in this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-1. **Protein-Phenotype Relation**:
-   - Pre-processing is performed using the `protein-phenotype.ipynb` notebook.
-
-2. **Protein-Disease Relation**:
-   - Pre-processing is performed using the `protein-disease.ipynb` notebook.
-
-3. **Phenotype-Phenotype Relation**:
-   - Pre-processing is performed using the `phenotype-phenotype.ipynb` notebook.
-
-4. **Phenotype-Disease Relation**:
-   - Pre-processing is performed using the `phenotype-disease.ipynb` notebook.
-
-5. **Disease-Phenotype Relation**:
-   - Pre-processing is performed using the `disease-phenotype.ipynb` notebook.
----
-### 8. DISEASES
-The DISEASES database provides curated associations between proteins and diseases for this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `protein-disease.ipynb` notebook.
----
-### 9. DisGeNET
-
-The DisGeNET database provides curated gene-disease associations for this project.
-
-#### **Data Download**
-- Data is retrieved programmatically via the DisGeNET API.
-- Registration for an academic account is required to access the API. Follow the instructions on the DisGeNET website to create an account and obtain your API key.
-- Example Python script for fetching gene-disease data:
-  ```python
-  import pandas as pd
   import requests
   import json
-  import time
-  import os
-  from tqdm import tqdm  
-  from requests.exceptions import ConnectionError  
-  import warnings
-  from urllib3.exceptions import InsecureRequestWarning
 
-  warnings.filterwarnings('ignore', category=InsecureRequestWarning)
+  def fetch_and_write_annotations(base_url, total_pages, file_path):
+      with open(file_path, 'w') as file:
+          file.write('[')
+          first_entry = True 
+          
+          for page in range(1, total_pages + 1):
+              url = f"{base_url}?page={page}"
+              print(f"Fetching data from: {url}") 
+              response = requests.get(url)
+              if response.status_code == 200:
+                  data = response.json()
+                  annotations = data.get('Annotations', {}).get('Annotation', [])
+                  
+                  for annotation in annotations:
+                      if not first_entry:
+                          file.write(',')
+                      json.dump(annotation, file)
+                      first_entry = False
+              else:
+                  print(f"Failed to retrieve data for page {page}: {response.status_code}")
+                  continue
+          
+          file.write(']')
 
-  API_KEYS = ["your_api_key_here"]  # Replace with your valid API key
-  file_path = 'ncbi_gene_id_with_symbol.csv'  # Path to input file
-  output_file = "gene_disease_umls.csv"  # Output file
+  base_url = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/annotations/heading/CAS/JSON"
+  total_pages = 2789  # Update the total number if needed
+  file_path = "CAS_data.json"
 
-  def send_request(gene_id, page_number, api_key):
-      params = {"gene_ncbi_id": str(gene_id), "page_number": str(page_number)}
-      headers = {"Authorization": api_key, "accept": "application/json"}
-      response = requests.get("https://api.disgenet.com/api/v1/gda/summary", params=params, headers=headers, verify=False)
-      return response.json() if response.ok else None
-
-  # Example processing function
-  def process_data():
-      for chunk in pd.read_csv(file_path, chunksize=100):
-          for _, row in chunk.iterrows():
-              gene_id = row["GeneID"]
-              page_number = 0
-              while True:
-                  data = send_request(gene_id, page_number, API_KEYS[0])
-                  if data and "payload" in data:
-                      for association in data["payload"]:
-                          print(f"Gene: {gene_id}, Disease: {association.get('diseaseName')}")
-                          # Write to output
-                  page_number += 1
-                  if page_number >= data.get("paging", {}).get("totalPages", 1):
-                      break
-
-  process_data()
+  fetch_and_write_annotations(base_url, total_pages, file_path)
   ```
-#### **Pre-processing**
-- Pre-processing is performed using the `gene-disease.ipynb` notebook.
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_drug.ipynb` notebook.
 ---
-### 10. HMDB (Human Metabolome Database)
+#### 3.3.30 NDC (National Drug Code)
 
-The HMDB database provides curated metabolite data and is used for multiple relations in this project.
+The NDC database provides standardized drug identification codes for the `drug` entity in this project.
 
-#### **Data Download**
+##### **Data Download**
 - The data can be accessed via the `Download link` in the `Entity` section of this document.
 - No registration is required for downloading.
 
-#### **Pre-processing**
-1. **Metabolite-Protein Relation**:
-   - Pre-processing is performed using the `metabolite-protein.ipynb` notebook.
-
-2. **Metabolite-Disease Relation**:
-   - Pre-processing is performed using the `metabolite-disease.ipynb` notebook.
-
-3. **Drug-Metabolite Relation**:
-   - Pre-processing is performed using the `drug-metabolite.ipynb` notebook.
-
-- The notebooks extract the relevant relationships from the downloaded HMDB data, standardize the formats, and integrate them into the knowledge graph.
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_drug.ipynb` notebook.
 ---
-### 11. DisBiome
 
-The DisBiome database provides curated microbiota-disease associations for this project.
+#### 3.3.31 UNII (Unique Ingredient Identifier)
 
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
+The UNII database provides unique identifiers for drug ingredients, split into two parts.
 
-#### **Pre-processing**
-- Pre-processing is performed using the `microbiota-disease.ipynb` notebook.
+##### **Data Download**
+1. **Part 1**:
+   - Can be directly downloaded via the `Download link` in the `Entity` section of this document.
+
+2. **Part 2**:
+   - Data is fetched programmatically using a Python script via the PubChem API.
+   - Example Python script:
+     ```python
+     import requests
+     import json
+
+     def fetch_and_write_annotations(base_url, total_pages, file_path):
+         with open(file_path, 'w') as file:
+             file.write('[')
+             first_entry = True 
+             
+             for page in range(1, total_pages + 1):
+                 url = f"{base_url}?page={page}"
+                 print(f"Fetching data from: {url}") 
+                 response = requests.get(url)
+                 if response.status_code == 200:
+                     data = response.json()
+                     annotations = data.get('Annotations', {}).get('Annotation', [])
+                     
+                     for annotation in annotations:
+                         if not first_entry:
+                             file.write(',')
+                         json.dump(annotation, file)
+                         first_entry = False
+                 else:
+                     print(f"Failed to retrieve data for page {page}: {response.status_code}")
+                     continue
+             
+             file.write(']')
+
+     base_url = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/annotations/heading/UNII/JSON"
+     total_pages = 153  # Update the total number if needed
+     file_path = "unii_data.json"
+
+     fetch_and_write_annotations(base_url, total_pages, file_path)
+     ```
+
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_drug.ipynb` notebook.
+
 ---
-### 12. DrugBank
 
-The DrugBank database provides comprehensive drug-related information and is used for multiple relations in this project.
+#### 3.3.32 DrugBank
 
-#### **Data Download**
+The DrugBank database provides detailed drug information for the `drug` entity in this project.
+
+##### **Data Download**
 - Registration for an academic account is required to access the DrugBank data.
-- Follow the instructions on the DrugBank website to create an account and download the necessary files.
+- Once registered, data can be downloaded from the DrugBank website.
 
-#### **Pre-processing**
-1. **Drug-Protein Relation**:
-   - Pre-processing is performed using the `drug-protein.ipynb` notebook.
-
-2. **Drug-Drug Relation**:
-   - Pre-processing is performed using the `drug-drug.ipynb` notebook.
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_drug.ipynb` notebook.
 ---
-### 13. DrugCentral
+#### 3.3.33 CTD
 
-The DrugCentral database provides curated drug-related information and is used for multiple relations in this project.
+The CTD database provides curated data on chemical exposures, diseases, and gene interactions for the `exposure` entity in this project.
 
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- The downloaded file is an SQL database containing all DrugCentral data.
-
-#### **Pre-processing**
-1. **Drug-Protein Relation**:
-   - Pre-processing is performed using the `drug-protein.ipynb` notebook.
-   - Extracting the necessary relationships (e.g., drug-protein interactions) using SQL queries.
-
-2. **Drug-Disease Relation**:
-   - Pre-processing is performed using the `drug-disease.ipynb` notebook.
-   - Extracting the necessary relationships (e.g., drug-disease associations) using SQL queries.
----
-### 14. BindingDB
-
-The BindingDB database provides data on molecular interactions, including drug-target binding affinities, and is used in this project.
-
-#### **Data Download**
+##### **Data Download**
 - The data can be accessed via the `Download link` in the `Entity` section of this document.
 - No registration is required for downloading.
 
-#### **Pre-processing**
-- Pre-processing is performed using the `drug-protein.ipynb` notebook.
-- The downloaded file contains a large dataset. A Python script is used to filter the data for human-related entries to reduce the size of the dataset:
-   ```python
-    import pandas as pd
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_exposure.ipynb` notebook.
+---
 
-    def filter_human_bindingdb(input_file, output_file, chunksize=10000):
-        df_bindingdb_human = pd.DataFrame()
+#### 3.3.34 ToxCast
 
-        for i, chunk in enumerate(pd.read_csv(input_file, sep='\t', on_bad_lines='skip', iterator=True, chunksize=chunksize)):
-            chunk_human = chunk[chunk['Target Source Organism According to Curator or DataSource'] == 'Homo sapiens']
+The ToxCast database provides high-throughput screening data for chemical toxicity used in this project for the `exposure` entity.
 
-            chunk_human.to_csv(output_file, mode='a', header=(i == 0), sep='\t', index=False)
-
-    if __name__ == "__main__":
-        input_file = 'BindingDB_All.tsv'  # Modify with your input file path
-        output_file = 'BindingDB_Human.tsv'  # Modify with your desired output file path
-        filter_human_bindingdb(input_file, output_file)
-   ```
-### 15. SIDER
-
-The SIDER database provides curated drug-phenotype (side effect) associations and is used in this project.
-
-#### **Data Download**
+##### **Data Download**
 - The data can be accessed via the `Download link` in the `Entity` section of this document.
 - No registration is required for downloading.
 
-#### **Pre-processing**
-- Pre-processing is performed using the `drug-phenotype.ipynb` notebook.
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_exposure.ipynb` notebook.
 ---
-### 16. MetaNetX
+#### 3.3.35 ChemIDplus
 
-The MetaNetX database provides curated metabolite-metabolite associations for this project.
+The ChemIDplus database provides curated chemical information and is used in this project for the `exposure` and `drug` entities.
 
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
+##### **Data Download**
+- Data is fetched programmatically using a Python script via the PubChem API.
+- The following script retrieves the data and saves it as `CAS_data.json`:
+  ```python
+  import pandas as pd
+  import json
+  import requests
 
-#### **Pre-processing**
-- Pre-processing is performed using the `metabolite-metabolite.ipynb` notebook.
----
+  def fetch_and_write_annotations(base_url, total_pages, file_path):
+      with open(file_path, 'w') as file:
+          file.write('[')
+          first_entry = True 
+          
+          for page in range(1, total_pages + 1):
+              url = f"{base_url}?page={page}"
+              print(f"Fetching data from: {url}") 
+              response = requests.get(url)
+              if response.status_code == 200:
+                  data = response.json()
+                  annotations = data.get('Annotations', {}).get('Annotation', [])
+                  
+                  for annotation in annotations:
+                      if not first_entry:
+                          file.write(',')
+                      json.dump(annotation, file)
+                      first_entry = False
+              else:
+                  print(f"Failed to retrieve data for page {page}: {response.status_code}")
+                  continue
+          
+          file.write(']')
 
-### 17. MDAD
+  base_url = "https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/annotations/heading/CAS/JSON"
+  total_pages = 2789  # Update to reflect the total number of pages
+  file_path = "CAS_data.json"
 
-The MDAD database provides curated microbiota-drug interaction data for this project.
+  fetch_and_write_annotations(base_url, total_pages, file_path)
 
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-1. **Microbiota-Drug Relation**:
-   - Pre-processing is performed using the `microbiota-drug.ipynb` notebook.
-
-2. **Drug-Microbiota Relation**:
-   - Pre-processing is performed using the `drug-microbiota.ipynb` notebook.
----
-
-### 18. PharmacoMicrobiomics
-
-The PharmacoMicrobiomics database provides curated data on microbiota-drug interactions for this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-1. **Microbiota-Drug Relation**:
-   - Pre-processing is performed using the `microbiota-drug.ipynb` notebook.
-
-2. **Drug-Microbiota Relation**:
-   - Pre-processing is performed using the `drug-microbiota.ipynb` notebook.
----
-### 19. DO (Disease Ontology)
-
-The Disease Ontology (DO) database provides curated disease-disease associations and hierarchical relationships for this project.
-
-#### **Data Download**
-- The data can be accessed via the `Download link` in the `Entity` section of this document.
-- No registration is required for downloading.
-
-#### **Pre-processing**
-- Pre-processing is performed using the `disease-disease.ipynb` notebook.
+  print(f"Data saved to {file_path}")
+  ```
+##### **Pre-processing**
+- Pre-processing is performed using the `biomedgraphica_exposure.ipynb` notebook.
 ---
 
-## Relation
+
+## 4. Detailed Steps of Data Download and Pre-processing of Relation
+This section outlines the databases used for relation extraction and mapping, detailing the download and pre-processing steps for integrating them into the knowledge graph.
+
+### 4.1 Relation
 Below are the key data sources used, along with their processing scripts and output files:
 | Database | Download Link | Processing script | Output file |
 | :-------: | :-------: | :-------: | :-------: |
@@ -1302,5 +963,356 @@ Below are the key data sources used, along with their processing scripts and out
 | DrugCentral | [Link](https://drugcentral.org/ActiveDownload) | drug-disease.ipynb | biomedgraphica_drug_disease.csv |
 | DrugBank | [Link](https://go.drugbank.com/releases/5-1-12/downloads/all-full-database) | drug-drug.ipynb | biomedgraphica_drug_drug.csv |
 
+### 4.2 Database-Specific Steps
+#### 4.2.1 Ensembl
 
+The Ensembl database provides data for gene-transcript and transcript-protein relations, retrieved using the [BioMart](https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-10-22).
 
+##### **Data Download**
+- Data is accessed via the [BioMart](https://bmcgenomics.biomedcentral.com/articles/10.1186/1471-2164-10-22), specifying the attributes relevant to each relation type:
+  - **Gene-Transcript Relation**:
+     - Attributes: `['ensembl_gene_id', 'ensembl_transcript_id']`
+
+  - **Transcript-Protein Relation**:
+     - Attributes: `['ensembl_transcript_id', 'ensembl_protein_id']`
+
+##### **Pre-processing**
+- **Gene-Transcript Relation**:
+   - Pre-processing is performed using the `gene-transcript.ipynb` notebook.
+- **Transcript-Protein Relation**:
+   - Pre-processing is performed using the `transcript-protein.ipynb` notebook.
+---
+
+#### 4.2.2 RefSeq
+
+The RefSeq database provides data for `gene-transcript` and `transcript-protein` relations in this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- **Gene-Transcript Relation**:
+   - Pre-processing is performed using the `gene-transcript.ipynb` notebook.
+
+- **Transcript-Protein Relation**:
+   - Pre-processing is performed using the `transcript-protein.ipynb` notebook.
+---
+
+#### 4.2.3 UniProt
+
+The UniProt database provides data for `transcript-protein` and `protein-disease` relations in this project.
+
+##### **Data Download**
+- Data is retrieved programmatically using the UniProt API with the following parameters:
+  ```python
+  params = {
+      'fields': 'accession,xref_ensembl',  # choose the parameters you need
+      'format': 'tsv',
+      'query': '(model_organism:9606) AND (reviewed:true)',  # human reviewed entries
+      'sort': 'organism_name asc'
+  }
+  ```
+##### **Pre-processing**
+- **Transcript-Protein Relation:**:
+   - Pre-processing is performed using the `transcript-protein.ipynb` notebook.
+
+- **Protein-Disease Relation**:
+   - Pre-processing is performed using the `protein-disease.ipynb` notebook.
+---
+
+#### 4.2.4 BioGRID
+
+The BioGRID database provides curated protein-protein interaction data for this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `protein-protein.ipynb` notebook.
+---
+
+#### 4.2.5 STRING
+
+The STRING database provides protein-protein interaction data, including interaction confidence scores.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `protein-protein.ipynb` notebook.
+---
+
+#### 4.2.6 KEGG
+
+The KEGG database provides data for multiple relations in this project, including `protein-protein`, `protein-pathway`, `pathway-protein`, `pathway-drug`, and `drug-pathway`.
+
+##### **Data Download**
+- KEGG data is retrieved using R scripts. The specific code can be found in the `Entity` section of this document.
+
+##### **Pre-processing**
+- **Protein-Protein Relation**:
+   - Pre-processing is performed using the `protein-protein.ipynb` notebook.
+
+- **Protein-Pathway Relation**:
+   - Pre-processing is performed using the `protein-pathway.ipynb` notebook.
+
+- **Pathway-Protein Relation**:
+   - Pre-processing is performed using the `pathway-protein.ipynb` notebook.
+
+- **Pathway-Drug Relation**:
+   - Pre-processing is performed using the `pathway-drug.ipynb` notebook.
+
+- **Drug-Pathway Relation**:
+   - Pre-processing is performed using the `drug-pathway.ipynb` notebook.
+---
+
+#### 4.2.7 HPO (Human Phenotype Ontology)
+
+The HPO database provides standardized phenotype information and is used for multiple relations in this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- **Protein-Phenotype Relation**:
+   - Pre-processing is performed using the `protein-phenotype.ipynb` notebook.
+
+- **Protein-Disease Relation**:
+   - Pre-processing is performed using the `protein-disease.ipynb` notebook.
+
+- **Phenotype-Phenotype Relation**:
+   - Pre-processing is performed using the `phenotype-phenotype.ipynb` notebook.
+
+- **Phenotype-Disease Relation**:
+   - Pre-processing is performed using the `phenotype-disease.ipynb` notebook.
+
+- **Disease-Phenotype Relation**:
+   - Pre-processing is performed using the `disease-phenotype.ipynb` notebook.
+---
+
+#### 4.2.8 DISEASES
+The DISEASES database provides curated associations between proteins and diseases for this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `protein-disease.ipynb` notebook.
+---
+#### 4.2.9 DisGeNET
+
+The DisGeNET database provides curated gene-disease associations for this project.
+
+##### **Data Download**
+- Data is retrieved programmatically via the DisGeNET API.
+- Registration for an academic account is required to access the API. Follow the instructions on the DisGeNET website to create an account and obtain your API key.
+- Example Python script for fetching gene-disease data:
+  ```python
+  import pandas as pd
+  import requests
+  import json
+  import time
+  import os
+  from tqdm import tqdm  
+  from requests.exceptions import ConnectionError  
+  import warnings
+  from urllib3.exceptions import InsecureRequestWarning
+
+  warnings.filterwarnings('ignore', category=InsecureRequestWarning)
+
+  API_KEYS = ["your_api_key_here"]  # Replace with your valid API key
+  file_path = 'ncbi_gene_id_with_symbol.csv'  # Path to input file
+  output_file = "gene_disease_umls.csv"  # Output file
+
+  def send_request(gene_id, page_number, api_key):
+      params = {"gene_ncbi_id": str(gene_id), "page_number": str(page_number)}
+      headers = {"Authorization": api_key, "accept": "application/json"}
+      response = requests.get("https://api.disgenet.com/api/v1/gda/summary", params=params, headers=headers, verify=False)
+      return response.json() if response.ok else None
+
+  # Example processing function
+  def process_data():
+      for chunk in pd.read_csv(file_path, chunksize=100):
+          for _, row in chunk.iterrows():
+              gene_id = row["GeneID"]
+              page_number = 0
+              while True:
+                  data = send_request(gene_id, page_number, API_KEYS[0])
+                  if data and "payload" in data:
+                      for association in data["payload"]:
+                          print(f"Gene: {gene_id}, Disease: {association.get('diseaseName')}")
+                          # Write to output
+                  page_number += 1
+                  if page_number >= data.get("paging", {}).get("totalPages", 1):
+                      break
+
+  process_data()
+  ```
+##### **Pre-processing**
+- Pre-processing is performed using the `gene-disease.ipynb` notebook.
+---
+#### 4.2.10 HMDB (Human Metabolome Database)
+
+The HMDB database provides curated metabolite data and is used for multiple relations in this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- **Metabolite-Protein Relation**:
+   - Pre-processing is performed using the `metabolite-protein.ipynb` notebook.
+
+- **Metabolite-Disease Relation**:
+   - Pre-processing is performed using the `metabolite-disease.ipynb` notebook.
+
+- **Drug-Metabolite Relation**:
+   - Pre-processing is performed using the `drug-metabolite.ipynb` notebook.
+
+- The notebooks extract the relevant relationships from the downloaded HMDB data, standardize the formats, and integrate them into the knowledge graph.
+---
+
+#### 4.2.11 DisBiome
+
+The DisBiome database provides curated microbiota-disease associations for this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `microbiota-disease.ipynb` notebook.
+---
+#### 4.2.12 DrugBank
+
+The DrugBank database provides comprehensive drug-related information and is used for multiple relations in this project.
+
+##### **Data Download**
+- Registration for an academic account is required to access the DrugBank data.
+- Follow the instructions on the DrugBank website to create an account and download the necessary files.
+
+##### **Pre-processing**
+- **Drug-Protein Relation**:
+   - Pre-processing is performed using the `drug-protein.ipynb` notebook.
+
+- **Drug-Drug Relation**:
+   - Pre-processing is performed using the `drug-drug.ipynb` notebook.
+---
+
+#### 4.2.13 DrugCentral
+
+The DrugCentral database provides curated drug-related information and is used for multiple relations in this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- The downloaded file is an SQL database containing all DrugCentral data.
+
+##### **Pre-processing**
+- **Drug-Protein Relation**:
+   - Pre-processing is performed using the `drug-protein.ipynb` notebook.
+   - Extracting the necessary relationships (e.g., drug-protein interactions) using SQL queries.
+
+- **Drug-Disease Relation**:
+   - Pre-processing is performed using the `drug-disease.ipynb` notebook.
+   - Extracting the necessary relationships (e.g., drug-disease associations) using SQL queries.
+---
+
+#### 4.2.14 BindingDB
+
+The BindingDB database provides data on molecular interactions, including drug-target binding affinities, and is used in this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `drug-protein.ipynb` notebook.
+- The downloaded file contains a large dataset. A Python script is used to filter the data for human-related entries to reduce the size of the dataset:
+   ```python
+    import pandas as pd
+
+    def filter_human_bindingdb(input_file, output_file, chunksize=10000):
+        df_bindingdb_human = pd.DataFrame()
+
+        for i, chunk in enumerate(pd.read_csv(input_file, sep='\t', on_bad_lines='skip', iterator=True, chunksize=chunksize)):
+            chunk_human = chunk[chunk['Target Source Organism According to Curator or DataSource'] == 'Homo sapiens']
+
+            chunk_human.to_csv(output_file, mode='a', header=(i == 0), sep='\t', index=False)
+
+    if __name__ == "__main__":
+        input_file = 'BindingDB_All.tsv'  # Modify with your input file path
+        output_file = 'BindingDB_Human.tsv'  # Modify with your desired output file path
+        filter_human_bindingdb(input_file, output_file)
+   ```
+
+#### 4.2.15 SIDER
+
+The SIDER database provides curated drug-phenotype (side effect) associations and is used in this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `drug-phenotype.ipynb` notebook.
+---
+
+#### 4.2.16 MetaNetX
+
+The MetaNetX database provides curated metabolite-metabolite associations for this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `metabolite-metabolite.ipynb` notebook.
+---
+
+#### 4.2.17 MDAD
+
+The MDAD database provides curated microbiota-drug interaction data for this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- **Microbiota-Drug Relation**:
+   - Pre-processing is performed using the `microbiota-drug.ipynb` notebook.
+
+- **Drug-Microbiota Relation**:
+   - Pre-processing is performed using the `drug-microbiota.ipynb` notebook.
+---
+
+#### 4.2.18 PharmacoMicrobiomics
+
+The PharmacoMicrobiomics database provides curated data on microbiota-drug interactions for this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- **Microbiota-Drug Relation**:
+   - Pre-processing is performed using the `microbiota-drug.ipynb` notebook.
+
+- **Drug-Microbiota Relation**:
+   - Pre-processing is performed using the `drug-microbiota.ipynb` notebook.
+---
+
+#### 4.2.19 DO (Disease Ontology)
+
+The Disease Ontology (DO) database provides curated disease-disease associations and hierarchical relationships for this project.
+
+##### **Data Download**
+- The data can be accessed via the `Download link` in the `Entity` section of this document.
+- No registration is required for downloading.
+
+##### **Pre-processing**
+- Pre-processing is performed using the `disease-disease.ipynb` notebook.
