@@ -11,6 +11,7 @@
 upload.ipynb
 # Embedding files
 text_emb.ipynb
+text_emb_mean.ipynb
 
 # soft_match
 /soft_match/*
