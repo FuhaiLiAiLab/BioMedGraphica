@@ -58,7 +58,7 @@ BioMedGraphica offers an intuitive **Windows-based GUI**, allowing users to:
 - [🌐 Webpage (Coming Soon)](https://www.google.com)
 - [📄 Paper (bioRxiv)](https://www.google.com)
 - [📂 Hugging Face Dataset](https://huggingface.co/datasets/FuhaiLiAiLab/BioMedGraphica/tree/main)
-- [🎬 Demo Video](./Videos/Demo1.mp4) (GUI Preview)
+- [🎬 Demo Video](./Videos/demo.mp4)
 
 ---
 
@@ -80,7 +80,7 @@ Scripts and processing logic are in the `BioMedGraphica-Raw` folder
 
 ### 3. GUI Software
 
-The software will be released soon — a demo is available [here](./Videos/Demo1.mp4)
+The software will be released soon — a demo is available [here](./Videos/demo.mp4)
 
 ---
 
