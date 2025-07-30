@@ -83,7 +83,7 @@ Scripts and processing logic are in the `BioMedGraphica-Raw` folder
 
 ### 3. GUI Software
 
-The web app will be available online soon. Source code is available [here]. (https://github.com/CallOfDady/BioMedGraphica_WebApp)
+The web app will be available online soon. Source code is available in [BioMedGraphica_WebApp](https://github.com/CallOfDady/BioMedGraphica_WebApp).
 
 ---
 
