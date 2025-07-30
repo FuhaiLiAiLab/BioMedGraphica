@@ -58,10 +58,10 @@ BioMedGraphica offers an intuitive **Windows-based GUI**, allowing users to:
 - [🌐 Webpage (Coming Soon)](https://www.google.com)
 - [📄 Paper (bioRxiv)](https://www.google.com)
 - [📂 Hugging Face Dataset](https://huggingface.co/datasets/FuhaiLiAiLab/BioMedGraphica/tree/main)
-- [🎬 Demo Video](./Videos/demo.mp4)
+- [🎬 Demo Video]
 
 
-https://github.com/user-attachments/assets/c765f8b2-e346-4612-a79f-1fa631a33fb4
+https://github.com/user-attachments/assets/4c042d78-6be7-4596-83a6-ddf1439b5190
 
 
 ---
