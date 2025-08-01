@@ -59,7 +59,7 @@ https://github.com/user-attachments/assets/4c042d78-6be7-4596-83a6-ddf1439b5190
 
 ## 🔗 Quick Access
 
-- [🌐 Webpage (Coming Soon)](https://github.com/CallOfDady/BioMedGraphica_WebApp)
+- [🌐 Web Aoo](https://app.biomedgraphica.org/)
 - [📄 Paper (bioRxiv)](https://www.biorxiv.org/content/10.1101/2024.12.05.627020v1)
 - [📂 Hugging Face Dataset](https://huggingface.co/datasets/FuhaiLiAiLab/BioMedGraphica/tree/main)
 
@@ -83,7 +83,7 @@ Scripts and processing logic are in the `BioMedGraphica-Raw` folder
 
 ### 3. GUI Software
 
-The web app will be available online soon. Source code is available in [BioMedGraphica_WebApp](https://github.com/CallOfDady/BioMedGraphica_WebApp).
+The web app is now available online. Source code is available in [BioMedGraphica_WebApp](https://github.com/CallOfDady/BioMedGraphica_WebApp).
 
 ---
 
