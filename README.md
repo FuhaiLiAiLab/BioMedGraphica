@@ -59,7 +59,7 @@ https://github.com/user-attachments/assets/4c042d78-6be7-4596-83a6-ddf1439b5190
 
 ## 🔗 Quick Access
 
-- [🌐 Web Aoo](https://app.biomedgraphica.org/)
+- [🌐 Web App](https://app.biomedgraphica.org/)
 - [📄 Paper (bioRxiv)](https://www.biorxiv.org/content/10.1101/2024.12.05.627020v1)
 - [📂 Hugging Face Dataset](https://huggingface.co/datasets/FuhaiLiAiLab/BioMedGraphica/tree/main)
 
