@@ -39,13 +39,15 @@ To address this, we introduce **BioMedGraphica**, an **all-in-one platform** for
 
 ## 📦 What is BioMedGraphica?
 
+![BMG-statistics](./Figures/Figure0-1.png)
+
 - **2,306,921 Entities**  
 - **27,232,091 Relations**  
 - **11 Entity Types** and **30 Harmonized Relation Types**  
 - Fully attributed with unique IDs and **textual descriptions**
 - Enables **zero-shot / few-shot knowledge discovery** via relation prediction
 - Generates **graph AI-ready subgraphs** tailored to custom datasets
-
+- 
 ---
 
 ## 🧠 Use Cases
