@@ -46,8 +46,6 @@ To address this, we introduce **BioMedGraphica**, an **all-in-one platform** for
 - Enables **zero-shot / few-shot knowledge discovery** via relation prediction
 - Generates **graph AI-ready subgraphs** tailored to custom datasets
 
-![BMG-statistics](./Figures/Figure0-1.png)
-
 ---
 
 ## 🧠 Use Cases
