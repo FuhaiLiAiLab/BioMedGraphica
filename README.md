@@ -1,11 +1,26 @@
 # BioMedGraphica
 
-## An All-in-One Platform for Biomedical Prior Knowledge and Omic Signaling Graph Generation
+![BMG-logo](./Figures/BMG-logo.png)
 
-![WebUI](https://img.shields.io/badge/WebUI-BioMedGraphica-red) 
-![KnowledgeGraph](https://img.shields.io/badge/Knowledge_Graph-BioMedGraphica-blue)  
-
----
+<p align="center">
+  <a href="https://github.com/FuhaiLiAiLab/BioMedGraphica">
+    <img src="https://img.shields.io/badge/GitHub-BioMedGraphica-181717?logo=github" alt="GitHub Repo">
+  </a>
+  <a href="https://github.com/FuhaiLiAiLab/BioMedGraphica">
+    <img src="https://img.shields.io/badge/WebUI-BioMedGraphica-red" alt="WebUI">
+  </a>
+  <a href="https://github.com/FuhaiLiAiLab/BioMedGraphica">
+    <img src="https://img.shields.io/badge/Knowledge%20Graph-BioMedGraphica-blue" alt="Knowledge Graph">
+  </a>
+</p>
+<p align="center">
+  <a href="https://huggingface.co/datasets/FuhaiLiAiLab/BioMedGraphica">
+    <img src="https://img.shields.io/badge/Hugging%20Face-Dataset-FFD21E?logo=huggingface" alt="Dataset">
+  </a>
+  <a href="https://www.biorxiv.org/content/10.1101/2024.12.05.627020v2">
+    <img src="https://img.shields.io/badge/bioRxiv-Paper-6f42c1" alt="Paper">
+  </a>
+</p>
 
 Artificial intelligence (AI) is transforming scientific discovery by leveraging its scalable capabilities to integrate and analyze large-scale datasets for knowledge mining. Foundation models—such as large language models (LLMs) and large vision models (LVMs)—are enabling general-purpose AI, yet they rely on highly structured data that is rarely available in the biomedical domain.
 
@@ -24,9 +39,9 @@ To address this, we introduce **BioMedGraphica**, an **all-in-one platform** for
 
 ## 📦 What is BioMedGraphica?
 
-- **3,131,788 Entities**  
-- **56,817,063 Relations**  
-- **11 Entity Types** and **29 Harmonized Relation Types**  
+- **2,306,921 Entities**  
+- **27,232,091 Relations**  
+- **11 Entity Types** and **30 Harmonized Relation Types**  
 - Fully attributed with unique IDs and **textual descriptions**
 - Enables **zero-shot / few-shot knowledge discovery** via relation prediction
 - Generates **graph AI-ready subgraphs** tailored to custom datasets
@@ -39,7 +54,6 @@ To address this, we introduce **BioMedGraphica**, an **all-in-one platform** for
 - Discovery of novel disease mechanisms and pathways
 - Target and drug prioritization in AI4PHM
 - Multi-omics signaling graph construction
-- Synergistic drug cocktail inference
 
 ---
 
