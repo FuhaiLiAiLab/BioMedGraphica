@@ -6,7 +6,7 @@
   <a href="https://github.com/FuhaiLiAiLab/BioMedGraphica">
     <img src="https://img.shields.io/badge/GitHub-BioMedGraphica-181717?logo=github" alt="GitHub Repo">
   </a>
-  <a href="https://github.com/FuhaiLiAiLab/BioMedGraphica">
+  <a href="https://app.biomedgraphica.org">
     <img src="https://img.shields.io/badge/WebUI-BioMedGraphica-red" alt="WebUI">
   </a>
   <a href="https://github.com/FuhaiLiAiLab/BioMedGraphica">
